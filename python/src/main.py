@@ -5,7 +5,6 @@ from image_processing import *
 def Stream(cam):
     while cv2.waitKey(30) < 0:
         ret, frame = cam.getFrame()
-        frame = cv2.rotate(frame, cv2.ROTATE_180)
         if ret == True:
             mask = cam.red_mask(frame)
             rects = cam.getRects(mask)
@@ -16,6 +15,7 @@ def Stream(cam):
             cv2.imshow("masked", mask)
     cv2.destroyAllWindows()
 
+# ここがプログラムのスタート地点
 if __name__ == "__main__":
     cam = Camera()
     Stream(cam)

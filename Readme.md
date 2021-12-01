@@ -7,6 +7,21 @@
 * ~~SSH接続でOpencvの画像を出力できるようにする．~~
 * 画像からラインを検出するためのプログラムを書く.
 
+## ディレクトリ構成
+```shell
+.
+├── Readme.md # これ
+├── cpp # どうしても処理速度が出なかったらc++で書きます
+└── python # pythonでの開発環境
+    |── src # ソースファイル郡
+    |   ├── __pycache__
+    |   │   └── image_processing.cpython-37.pyc
+    |   ├── image_processing.py #カメラと画像処理関係をまとめる
+    |   └── main.py # 実行するファイル
+    |
+    └── Readme.md # pythonで開発したプログラムについての解説
+```
+
 ## SSH接続でのGUI出力について
 [RasPi側の設定1](https://users.miraclelinux.com/support/?q=node/374)
 [RasPI側の設定2](https://richarthurs.com/2019/01/20/raspberrypi-cv-setup/)

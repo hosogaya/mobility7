@@ -1,11 +1,16 @@
 import cv2
 import numpy as np 
 
+
+# カメラとの接続，設定と画像処理についての関数をまとめたもの
 class Camera:
-    # camera_path : path of camera
-    def __init__(self, camera_path = 0):
-        self.width = 320
-        self.height = 240
+    # self : クラスない関数では常にこれを最初に引数として設定します
+    # camera_path : 接続するカメラまでのパス
+    # rotate : 180度かいてんさせるか（True:回転する，False:しない）
+    def __init__(self, camera_path = 0, rotate = True, width = 320, height = 240):
+        self.width = width
+        self.height = height
+        self.rotate = rotate
         self.cap = cv2.VideoCapture(camera_path)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
@@ -17,8 +22,10 @@ class Camera:
     # ret : 画像が取得できたか（True:成功，False:失敗)
     # frame : 画像データ
     def getFrame(self):
-        self.ret, self.frame = self.cap.read()
-        return self.ret, self.frame
+        ret, frame = self.cap.read()
+        if self.rotate & ret:
+            frame = cv2.rotate(frame, cv2.ROTATE_180)
+        return ret, frame
 
     def red_mask(self, src):
         hsv = cv2.cvtColor(src, cv2.COLOR_BGR2HSV_FULL)
