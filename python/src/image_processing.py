@@ -53,8 +53,11 @@ class Camera:
         rects = [np.int0(cv2.boxPoints(cv2.minAreaRect(cv2.convexHull(contour)))) for contour in contours]
         return rects
     
-    def getCenter(self, rect):
-        center = rect.sum() / 4
+    # 与えられた四角形の中心位置を画像の位置を返す
+    # 絶対座標（左上を原点とした座標）が欲しい場合はabs = Trueに
+    def getCenter(self, rect, abs = False):
+        center = sum(rect)
         center[0] = center[0] - self.width/2
         center[1] = center[1] - self.height/2
+        return center
     
