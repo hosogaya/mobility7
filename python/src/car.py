@@ -1,4 +1,4 @@
-import numpy as np
+from kinematic_bicycle_model import OriginalKBM
 
 class Car:
     def __init__(self):
@@ -9,4 +9,3 @@ class Car:
         
     def __del__(self):
         pass
-    
