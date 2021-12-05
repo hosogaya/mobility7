@@ -92,6 +92,8 @@ if __name__ == "__main__":
     while True: pass #
 ```
 
+# c++についてメモ
+[OpenCVのインストール](https://swallow-incubate.com/archives/blog/20200709/)；ポイントは仮想メモリを増やしておくこと．インストールは2,3時間かかると考えて気長に待つ．
 
 # ラズパイについてのメモ
 * GPIOの入力範囲は`700 ~ 2300` [参考ページ](https://mickey-happygolucky.hatenablog.com/entry/2019/10/23/114711)

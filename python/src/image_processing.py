@@ -39,12 +39,11 @@ class Camera:
     
     def white_mask(self, src):
         hsv = cv2.cvtColor(src, cv2.COLOR_BGR2HSV_FULL)
-        h = hsv[:, :, 0]
-        s = hsv[:, :, 1]
-        v = hsv[:, :, 2]
+        hsv = cv2.GaussianBlur(hsv, ksize=(9,9), sigmaX = 3.0)
+        h, s, v = cv2.split(hsv)
         dist =  np.zeros(h.shape, dtype=np.uint8)
-        dist[(h < 50) & (s > 2) & (v > 70)] = 255 # white
-        dist[(h < 100) & (s < 10) & (v < 120)] = 255
+        dist[(h >60) & (s > 2) & (v > 70)] = 255 # white
+        dist[(h < 130) & (s < 10) & (v < 160)] = 255
         return dist
     
     # 画像中から一色で塗りつぶされている短形状を探索して，それらの頂点の座標を獲得する．
@@ -60,4 +59,18 @@ class Camera:
         center[0] = center[0] - self.width/2
         center[1] = center[1] - self.height/2
         return center
+    
+    def MeanFilter(self, frame):
+        kernel = np.array([[1/9, 1/9, 1/9],
+                           [1/9, 1/9, 1/9],
+                           [1/9, 1/9, 1/9]])
+        dist = cv2.filter2D(frame, -1, kernel)
+        return dist
+    
+    def EdgeEnhancement(self, frame):
+        kernel = np.array([[-1,-1,-1],
+                           [-1, 9,-1],
+                           [-1,-1,-1]])
+        dist = cv2.filter2D(frame, -1, kernel)
+        return dist
     

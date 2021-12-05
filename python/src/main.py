@@ -48,8 +48,10 @@ def driving(car, cam, motor):
             # 実行にかかっている時間をミリ秒で表示
             print("Execution time : %d" %((end_time - start_time) * 1000))
             # 画像表示
-            cv2.drawContours(frame, [max_rect], 0, (0, 0, 255), thickness=2)
+            for rect in rects:
+                cv2.drawContours(frame, [rect], 0, (0, 0, 255), thickness=2)
             cv2.imshow("origin", frame)
+            cv2.imshow("binary", mask)
             
     cv2.destroyAllWindows()
 
