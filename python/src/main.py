@@ -55,14 +55,15 @@ def control(car, cam, motor, camera_test):
         motor.Throttle(car.throttle)
         end_time = time.perf_counter() 
         
-        # 実行にかかっている時間をミリ秒で表示
-        print("Execution time : %d" %((end_time - start_time) * 1000))
         # 画像表示
         if camera_test: # 表示にも時間がかかるため，テスト走行時のみ表示する
             for rect in rects:
                 cv2.drawContours(frame, [rect], 0, (0, 0, 255), thickness=2)
             cv2.imshow("origin", frame)
             cv2.imshow("binary", mask)
+            
+        # 実行にかかっている時間をミリ秒で表示
+        print("Execution time : %d" %((end_time - start_time) * 1000))
 
 
 # ラインを検出しながらモータへの制御入力を行い走行する
