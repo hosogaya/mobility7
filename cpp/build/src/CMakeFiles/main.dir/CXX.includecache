@@ -9,6 +9,8 @@
 /home/pi/Programs/cpp/src/main.cpp
 iostream
 -
+wiringPi.h
+-
 opencv4/opencv2/opencv.hpp
 -
 

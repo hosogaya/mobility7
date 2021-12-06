@@ -6,20 +6,20 @@
 # To do list
 * ~~SSH接続でOpencvの画像を出力できるようにする．~~
 * 画像からラインを検出するためのプログラムを書く.
+* PWM信号と速度，操舵角の関係を明らかにする．
+* 走行中のカメラ画像を確認する.
 
 # ディレクトリ構成
 ```shell
 .
-├── Readme.md # これ
-├── cpp # どうしても処理速度が出なかったらc++で書きます
-└── python # pythonでの開発環境
-    |── src # ソースファイル郡
-    |   ├── __pycache__
-    |   │   └── image_processing.cpython-37.pyc
-    |   ├── image_processing.py #カメラと画像処理関係をまとめる
-    |   └── main.py # 実行するファイル
-    |
-    └── Readme.md # pythonで開発したプログラムについての解説
+.
+├── cpp # pythonで制御周期が間に合わなかった場合はc++で書きます．
+│   ├── build # ビルドするところ
+│   ├── lib # 自作ライブラリを作るところ
+│   └── src # mainプログラムを入れるところ
+└── python # pythonで開発するディレクトリ
+    ├── src # mainプログラム入れるところ
+    └── test # テストコードを入れるところ
 ```
 
 # SSH接続でのGUI出力について

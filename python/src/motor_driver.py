@@ -14,6 +14,7 @@ class Motor:
         
     # デストラクタ
     # 破棄されるときに呼び出される
+    # 操舵角と駆動力を０にする．
     def __del__(self):
         self.gpio.set_servo_pulsewidth(self.THROTTLE_PIN, self.THROTTLE_BIAS)
         self.gpio.set_servo_pulsewidth(self.STEER_PIN, self.STEER_BIAS)
