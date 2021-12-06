@@ -38,7 +38,6 @@ def control(car, cam, motor, camera_test):
     if ret == True:
         mask = cam.white_mask(frame)
         rects = cam.getRects(mask)
-        
         # 最大の短形状を抽出して制御入力を決める
         # 短形状がなかったらループを抜け出す（止まる）
         if len(rects) > 0: 
@@ -57,8 +56,9 @@ def control(car, cam, motor, camera_test):
         
         # 画像表示
         if camera_test: # 表示にも時間がかかるため，テスト走行時のみ表示する
-            for rect in rects:
-                cv2.drawContours(frame, [rect], 0, (0, 0, 255), thickness=2)
+            if len(rects) > 0:
+                for rect in rects:
+                    cv2.drawContours(frame, [rect], 0, (0, 0, 255), thickness=2)
             cv2.imshow("origin", frame)
             cv2.imshow("binary", mask)
             

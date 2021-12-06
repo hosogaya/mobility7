@@ -40,10 +40,13 @@ class Camera:
     def white_mask(self, src):
         hsv = cv2.cvtColor(src, cv2.COLOR_BGR2HSV_FULL)
         hsv = cv2.GaussianBlur(hsv, ksize=(9,9), sigmaX = 3.0)
-        h, s, v = cv2.split(hsv)
-        dist =  np.zeros(h.shape, dtype=np.uint8)
-        dist[(h >60) & (s > 2) & (v > 70)] = 255 # white
-        dist[(h < 130) & (s < 10) & (v < 160)] = 255
+        # h, s, v = cv2.split(hsv)
+        # dist =  np.zeros(h.shape, dtype=np.uint8)
+        low = (87, 0, 170)
+        high = (126, 40, 230)
+        # dist[(h >0) & (s > 0) & (v > 165)] = 255 # white
+        # dist[(h < 30) & (s < 25) & (v < 205)] = 255
+        dist = cv2.inRange(hsv, low, high)
         return dist
     
     # 画像中から一色で塗りつぶされている短形状を探索して，それらの頂点の座標を獲得する．

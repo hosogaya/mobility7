@@ -3,6 +3,7 @@
 # -*- coding: utf-8 -*-
 import time         # time.sleepを使いたいので
 import cv2          # OpenCVを使うため
+import numpy as np
 
 # メイン関数
 def main():
@@ -42,7 +43,8 @@ def main():
             print("success to read frame")
             # (B)ここから画像処理
             frame = cv2.rotate(frame, cv2.ROTATE_180) # 180度回転
-            image = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)      # OpenCV用のカラー並びに変換する
+            # image = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)      # OpenCV用のカラー並びに変換する
+            image = frame
             bgr_image = cv2.resize(image, dsize=(320,240) ) # 画像サイズを半分に変更
 
             hsv_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2HSV)  # BGR画像 -> HSV画像
@@ -55,15 +57,24 @@ def main():
             v_min = cv2.getTrackbarPos("V_min", "OpenCV Window")
             v_max = cv2.getTrackbarPos("V_max", "OpenCV Window")
 
+            hsv_image = cv2.GaussianBlur(hsv_image, ksize=(9,9), sigmaX = 3.0)
+
             # inRange関数で範囲指定２値化 -> マスク画像として使う
             mask_image = cv2.inRange(hsv_image, (h_min, s_min, v_min), (h_max, s_max, v_max)) # HSV画像なのでタプルもHSV並び
 
             # bitwise_andで元画像にマスクをかける -> マスクされた部分の色だけ残る
             result_image = cv2.bitwise_and(hsv_image, hsv_image, mask=mask_image)
-
+            
+            # 輪郭抽出
+            contours, _ = cv2.findContours(mask_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            rects = contours
+            # rects = [np.int0(cv2.boxPoints(cv2.minAreaRect(cv2.convexHull(contour)))) for contour in contours]
+            if len(rects) > 0:
+                for rect in rects:
+                    cv2.drawContours(bgr_image, [rect], 0, (0, 0, 255), thickness=2)
             # (X)ウィンドウに表示
             cv2.imshow('OpenCV Window', result_image)   # ウィンドウに表示するイメージを変えれば色々表示できる
-
+            cv2.imshow('original image', bgr_image)
 
     except( KeyboardInterrupt, SystemExit):    # Ctrl+cが押されたら離脱
         print( "SIGINTを検知" )

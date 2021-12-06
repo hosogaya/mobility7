@@ -65,7 +65,9 @@ VScodeの拡張機能に`Remote Developement`がある．これを使うとSSH�
 
 ## 勉強サイト
 [Pythonの基本](https://qiita.com/TakesxiSximada/items/65f8c018d25c6b08df85) : 基本中の基本を学べそう．仮想環境のところは飛ばしてもOK
+
 [オブジェクト指向1](https://qiita.com/kaitolucifer/items/926ed9bc08426ad8e835)：pythonやるならオブジェクト指向はわからないとということで．オブジェクト指向はプログラミングにおいて超重要な概念ですのでこの機会に．
+
 [オブジェクト指向2](https://www.headboost.jp/python-objective-paradigm/)：上のはかなりしっかり書かれてそうな感じだったので，もう少し軽めのやつです．
 
 ## 命名規則
