@@ -32,4 +32,3 @@ class Motor:
         if out < self.MIN_PWM: out = self.MIN_PWM
         elif out > self.MAX_PWM: out = self.MAX_PWM
         self.gpio.set_servo_pulsewidth(self.STEER_PIN, out)
-    

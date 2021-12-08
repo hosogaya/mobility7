@@ -23,8 +23,9 @@ def main():
     
     print("before Track bars")
     # トラックバーの生成
-    cv2.createTrackbar("H_min", "OpenCV Window", 0, 179, nothing)       # Hueの最大値は179
-    cv2.createTrackbar("H_max", "OpenCV Window", 128, 179, nothing)
+    # Hueの最大値はv2.COLOR_BGR2HSV_FULLの場合255
+    cv2.createTrackbar("H_min", "OpenCV Window", 0, 255, nothing)     
+    cv2.createTrackbar("H_max", "OpenCV Window", 128, 255, nothing)
     cv2.createTrackbar("S_min", "OpenCV Window", 128, 255, nothing)
     cv2.createTrackbar("S_max", "OpenCV Window", 255, 255, nothing)
     cv2.createTrackbar("V_min", "OpenCV Window", 128, 255, nothing)
@@ -47,7 +48,7 @@ def main():
             image = frame
             bgr_image = cv2.resize(image, dsize=(320,240) ) # 画像サイズを半分に変更
 
-            hsv_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2HSV)  # BGR画像 -> HSV画像
+            hsv_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2HSV_FULL)  # BGR画像 -> HSV画像
 
             # トラックバーの値を取る
             h_min = cv2.getTrackbarPos("H_min", "OpenCV Window")

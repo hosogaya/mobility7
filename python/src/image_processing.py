@@ -40,14 +40,27 @@ class Camera:
     def white_mask(self, src):
         hsv = cv2.cvtColor(src, cv2.COLOR_BGR2HSV_FULL)
         hsv = cv2.GaussianBlur(hsv, ksize=(9,9), sigmaX = 3.0)
-        # h, s, v = cv2.split(hsv)
-        # dist =  np.zeros(h.shape, dtype=np.uint8)
-        low = (87, 0, 170)
-        high = (126, 40, 230)
-        # dist[(h >0) & (s > 0) & (v > 165)] = 255 # white
-        # dist[(h < 30) & (s < 25) & (v < 205)] = 255
+        low = (15, 0, 135)
+        high = (220, 50, 230)
         dist = cv2.inRange(hsv, low, high)
         return dist
+    
+    def blue_mask(self, src):
+        hsv = cv2.cvtColor(src, cv2.COLOR_BGR2HSV_FULL)
+        hsv = cv2.GaussianBlur(hsv, ksize=(9,9), sigmaX = 3.0)
+        low = (135, 173, 30)
+        high = (220, 255, 250)
+        dist = cv2.inRange(hsv, low, high)
+        return dist    
+    
+    def geometryMask(self, src):
+        # h, w, ch = src.shape
+        h_high = int(self.height)
+        h_low = int(self.height*2/3)
+        w_high = int(self.width)
+        w_low = 0
+        return src[h_low:h_high, w_low:w_high]
+            
     
     # 画像中から一色で塗りつぶされている短形状を探索して，それらの頂点の座標を獲得する．
     def getRects(self, src):
@@ -57,10 +70,11 @@ class Camera:
     
     # 与えられた四角形の中心位置を画像の位置を返す
     # 絶対座標（左上を原点とした座標）が欲しい場合はabs = Trueに
-    def getCenter(self, rect, abs = False):
-        center = sum(rect)
-        center[0] = center[0] - self.width/2
-        center[1] = center[1] - self.height/2
+    def getCenter(self, rect, binary_src, abs = False):
+        center = sum(rect) / 4
+        h, w = binary_src.shape
+        center[0] = center[0] - w/2
+        center[1] = center[1] - h/2
         return center
     
     def MeanFilter(self, frame):

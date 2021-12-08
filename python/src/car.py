@@ -7,5 +7,7 @@ class Car:
         
         self.steer_p_gain = 2
         
+        self.detect = True
+        
     def __del__(self):
         pass
